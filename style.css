@@ -73,7 +73,8 @@ nav a:hover, nav a.active {
     overflow: hidden;
 }
 
-.slide {
+/* Replace the old .slide and @keyframes with this */
+.single-slide {
     position: absolute;
     top: 0;
     left: 0;
@@ -81,9 +82,10 @@ nav a:hover, nav a.active {
     height: 100%;
     background-size: cover;
     background-position: center;
-    opacity: 0;
+    background-image: url('images/slides/1.jpg'); /* The first image */
+    opacity: 0.6;
     z-index: 1;
-    animation: crossfade 15s infinite;
+    transition: opacity 1s ease-in-out; /* Smoothly fades the opacity */
 }
 
 /* Stagger the animations for 3 slides */
