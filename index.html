@@ -56,7 +56,7 @@
                     currentImage = 1;
                 }
 
-                const nextImageUrl = `images/slides/${currentImage}.jpg`; // Update your folder path if needed
+                const nextImageUrl = `images/slides/${currentImage}.jpeg`; // Update your folder path if needed
                 slider.style.backgroundImage = `url('${nextImageUrl}')`;
 
                 // Fade back in
@@ -64,7 +64,7 @@
 
                 // Preload the image after this one
                 let nextToLoad = currentImage + 1 > totalImages ? 1 : currentImage + 1;
-                preloadImage(`images/slides/${nextToLoad}.jpg`);
+                preloadImage(`images/slides/${nextToLoad}.jpeg`);
 
             }, 1000); // Wait 1 second for fade out to complete before swapping
 
