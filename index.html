@@ -24,9 +24,7 @@
     </header>
 
     <section id="home" class="hero">
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1464047736614-af63643285bf?auto=format&fit=crop&w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80');"></div>
+        <div id="hero-slider" class="slide single-slide"></div>
 
         <div class="hero-content">
             <h1>Elegant Spaces.<br>Unforgettable Events.</h1>
@@ -34,6 +32,44 @@
             <a href="venues.html" class="btn">Explore Our Venues</a>
         </div>
     </section>
+
+    <script>
+        const slider = document.getElementById('hero-slider');
+        const totalImages = 50; // Change this to your exact number of images
+        let currentImage = 1;
+
+        // Preload the next image to prevent flickering
+        function preloadImage(url) {
+            const img = new Image();
+            img.src = url;
+        }
+
+        // The Slideshow Function
+        setInterval(() => {
+            // Fade out
+            slider.style.opacity = 0;
+
+            setTimeout(() => {
+                // Change the image while invisible
+                currentImage++;
+                if (currentImage > totalImages) {
+                    currentImage = 1;
+                }
+
+                const nextImageUrl = `images/slides/${currentImage}.jpg`; // Update your folder path if needed
+                slider.style.backgroundImage = `url('${nextImageUrl}')`;
+
+                // Fade back in
+                slider.style.opacity = 0.6; // Matches the max opacity from our CSS
+
+                // Preload the image after this one
+                let nextToLoad = currentImage + 1 > totalImages ? 1 : currentImage + 1;
+                preloadImage(`images/slides/${nextToLoad}.jpg`);
+
+            }, 1000); // Wait 1 second for fade out to complete before swapping
+
+        }, 6000); // Changes every 6 seconds
+    </script>
 
     <footer>
         <div class="footer-content">
