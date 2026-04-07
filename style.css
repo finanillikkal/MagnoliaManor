@@ -9,7 +9,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: #111111;
-    background-color: #FAFAFA; /* Off-white for depth */
+    background-color: #FAFAFA;
     overflow-x: hidden;
 }
 
@@ -29,8 +29,8 @@ header {
     align-items: center;
     padding: 1rem 5%;
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px); /* Modern frosted glass effect */
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* Soft shadow instead of border */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -57,23 +57,56 @@ nav a {
     transition: color 0.3s ease;
 }
 
-nav a:hover {
+nav a:hover, nav a.active {
     color: var(--primary-blue);
 }
 
-/* Hero Section */
+/* Hero Section & Slideshow */
 .hero {
+    position: relative;
     height: 85vh;
-    background: linear-gradient(rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.7)), url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1920&q=80') center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    background-color: var(--dark);
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    z-index: 1;
+    animation: crossfade 15s infinite;
+}
+
+/* Stagger the animations for 3 slides */
+.slide:nth-child(1) { animation-delay: 0s; }
+.slide:nth-child(2) { animation-delay: 5s; }
+.slide:nth-child(3) { animation-delay: 10s; }
+
+@keyframes crossfade {
+    0% { opacity: 0; }
+    10% { opacity: 0.6; } /* Max opacity is 0.6 so the black background acts as an overlay */
+    33% { opacity: 0.6; }
+    43% { opacity: 0; }
+    100% { opacity: 0; }
 }
 
 .hero-content {
+    position: relative;
+    z-index: 2;
     max-width: 800px;
-    padding: 0 20px;
+    padding: 3rem;
+    background: rgba(10, 10, 10, 0.5); /* Text readability box */
+    border-radius: 16px;
+    backdrop-filter: blur(5px);
 }
 
 .hero h1 {
@@ -99,7 +132,7 @@ nav a:hover {
     font-weight: 600;
     font-size: 0.9rem;
     letter-spacing: 0.5px;
-    border-radius: 50px; /* Modern pill shape */
+    border-radius: 50px;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -117,6 +150,10 @@ section {
     padding: 6rem 5%;
 }
 
+.inner-page {
+    min-height: 70vh;
+}
+
 h2 {
     text-align: center;
     color: var(--dark);
@@ -124,60 +161,6 @@ h2 {
     font-weight: 700;
     margin-bottom: 3.5rem;
     letter-spacing: -0.5px;
-}
-
-/* Venues Grid */
-.venue-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.venue-card {
-    background: var(--white);
-    border-radius: 16px; /* Soft rounded corners */
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Soft, modern shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.venue-card:hover {
-    transform: translateY(-8px); /* Lift effect on hover */
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.img-wrapper {
-    width: 100%;
-    height: 260px;
-    overflow: hidden;
-}
-
-.venue-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.venue-card:hover img {
-    transform: scale(1.05); /* Slight zoom on hover */
-}
-
-.card-content {
-    padding: 2rem;
-}
-
-.venue-card h3 {
-    color: var(--dark);
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-}
-
-.venue-card p {
-    color: var(--gray-text);
-    font-size: 0.95rem;
 }
 
 /* Services Section */
@@ -199,7 +182,7 @@ h2 {
 }
 
 .service-box {
-    background: rgba(255, 255, 255, 0.03); /* Subtle glass effect */
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--white);
     padding: 3rem 2rem;
@@ -211,7 +194,7 @@ h2 {
 
 .service-box:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .service-box .icon {
@@ -231,77 +214,12 @@ h2 {
     font-size: 0.95rem;
 }
 
-/* Events */
-.events {
-    background-color: var(--white);
-    text-align: center;
-}
-
-.event-tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.event-tags span {
-    background: var(--gray-light);
-    color: var(--primary-blue);
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 0.95rem;
-}
-
-/* Contact */
-.contact {
-    background-color: var(--gray-light);
-}
-
-.contact form {
-    max-width: 700px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    background: var(--white);
-    padding: 3rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.input-group {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.contact input, .contact textarea {
-    width: 100%;
-    padding: 1.2rem;
-    border: 1px solid #E5E7EB;
-    border-radius: 8px; /* Modern rounded inputs */
-    font-family: 'Inter', sans-serif;
-    background: var(--gray-light);
-    transition: border-color 0.3s ease, background 0.3s ease;
-}
-
-.contact input:focus, .contact textarea:focus {
-    outline: none;
-    border-color: var(--primary-blue);
-    background: var(--white);
-}
-
-.contact button {
-    align-self: flex-start;
-}
-
 /* Footer */
 footer {
     background: var(--dark);
     color: var(--white);
     padding: 5rem 5% 2rem;
+    border-top: 1px solid #222;
 }
 
 .footer-content {
@@ -341,18 +259,18 @@ footer {
     margin: 0 auto;
 }
 
-/* Simple Mobile Responsiveness */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .input-group {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
     .hero h1 {
         font-size: 2.5rem;
     }
-
     nav ul {
-        display: none; /* In a real app, this would be a hamburger menu */
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    header {
+        flex-direction: column;
+        gap: 1rem;
     }
 }
