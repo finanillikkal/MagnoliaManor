@@ -347,6 +347,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1; /* Fixes vertical centering issues */
 }
 
 .close-btn {
@@ -355,8 +356,16 @@ footer {
     font-size: 2.5rem;
     background: transparent;
 }
-.prev-btn { left: 30px; }
-.next-btn { right: 30px; }
+
+.prev-btn {
+    left: 30px;
+    padding-right: 4px; /* Optical nudge to center the left arrow */
+}
+
+.next-btn {
+    right: 30px;
+    padding-left: 4px; /* Optical nudge to center the right arrow */
+}
 
 .close-btn:hover, .prev-btn:hover, .next-btn:hover {
     color: var(--primary-blue);
