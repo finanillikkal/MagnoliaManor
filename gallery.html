@@ -26,14 +26,7 @@
 
     <section class="gallery inner-page">
         <h2>Photo Gallery</h2>
-        <div class="gallery-grid">
-            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 1" class="gallery-item" onclick="openLightbox(0)">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 2" class="gallery-item" onclick="openLightbox(1)">
-            <img src="https://images.unsplash.com/photo-1464047736614-af63643285bf?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 3" class="gallery-item" onclick="openLightbox(2)">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 4" class="gallery-item" onclick="openLightbox(3)">
-            <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 5" class="gallery-item" onclick="openLightbox(4)">
-            <img src="https://images.unsplash.com/photo-1505366518717-59eb8f286b24?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 6" class="gallery-item" onclick="openLightbox(5)">
-        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
     </section>
 
     <div id="lightbox" class="lightbox">
@@ -61,13 +54,33 @@
     </footer>
 
     <script>
+        // --- 1. Generate the Gallery Automatically ---
+        const galleryGrid = document.getElementById('gallery-grid');
+        const totalImages = 50; // Update this if you add or remove photos!
+        const imageSources = [];
+
+        // Loop to create image tags dynamically
+        for (let i = 1; i <= totalImages; i++) {
+            const imgPath = `images/slides/${i}.jpeg`;
+            imageSources.push(imgPath); // Save path for the lightbox
+
+            // Create the HTML element
+            const imgElement = document.createElement('img');
+            imgElement.src = imgPath;
+            imgElement.alt = `Magnolia Manor Gallery Image ${i}`;
+            imgElement.className = 'gallery-item';
+
+            // Note: arrays start at 0, so image 1 is index 0
+            imgElement.onclick = () => openLightbox(i - 1);
+
+            // Add it to the page
+            galleryGrid.appendChild(imgElement);
+        }
+
+        // --- 2. Lightbox Functionality ---
         let currentImageIndex = 0;
-        const images = document.querySelectorAll('.gallery-item');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-
-        // Extract image sources into an array
-        const imageSources = Array.from(images).map(img => img.src);
 
         function openLightbox(index) {
             currentImageIndex = index;
@@ -96,6 +109,15 @@
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
                 closeLightbox();
+            }
+        });
+
+        // Bonus: Allow using Left/Right arrow keys and Escape key
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'ArrowRight') changeImage(1);
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'Escape') closeLightbox();
             }
         });
     </script>
