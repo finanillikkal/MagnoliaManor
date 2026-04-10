@@ -37,8 +37,9 @@ header {
 }
 
 .logo {
-    max-height: 60px;
+    max-height: 100px;
     width: auto;
+    mix-blend-mode: multiply;
 }
 
 nav ul {
