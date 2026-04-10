@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Magnolia Manor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-background">
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.jpeg" alt="Magnolia Manor Logo" class="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="venue.html">Venues</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="gallery inner-page">
+        <h2>Photo Gallery</h2>
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 1" class="gallery-item" onclick="openLightbox(0)">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 2" class="gallery-item" onclick="openLightbox(1)">
+            <img src="https://images.unsplash.com/photo-1464047736614-af63643285bf?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 3" class="gallery-item" onclick="openLightbox(2)">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 4" class="gallery-item" onclick="openLightbox(3)">
+            <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 5" class="gallery-item" onclick="openLightbox(4)">
+            <img src="https://images.unsplash.com/photo-1505366518717-59eb8f286b24?auto=format&fit=crop&w=600&q=80" alt="Gallery Image 6" class="gallery-item" onclick="openLightbox(5)">
+        </div>
+    </section>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <span class="prev-btn" onclick="changeImage(-1)">&#10094;</span>
+        <img id="lightbox-img" src="" alt="Expanded Gallery Image">
+        <span class="next-btn" onclick="changeImage(1)">&#10095;</span>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="images/logo.jpeg" alt="Magnolia Manor Logo" class="logo">
+            </div>
+            <div class="footer-contact">
+                <p><strong>Contact Us</strong></p>
+                <p>Oak Ridge, NC</p>
+                <p>(555) 123-4567</p>
+                <p>info@magnoliamanor.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Magnolia Manor Business & Event Center. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentImageIndex = 0;
+        const images = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        // Extract image sources into an array
+        const imageSources = Array.from(images).map(img => img.src);
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            lightboxImg.src = imageSources[currentImageIndex];
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function changeImage(direction) {
+            currentImageIndex += direction;
+
+            // Loop back to the start or end if clicking past the array bounds
+            if (currentImageIndex >= imageSources.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = imageSources.length - 1;
+            }
+
+            lightboxImg.src = imageSources[currentImageIndex];
+        }
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
