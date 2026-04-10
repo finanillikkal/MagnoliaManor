@@ -444,13 +444,13 @@ footer {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #5b7c65; /* A nice sage green, fitting for a manor */
-    box-shadow: 0 0 0 3px rgba(91, 124, 101, 0.2);
+    border-color: #2b4c7e; /* Elegant blue */
+    box-shadow: 0 0 0 3px rgba(43, 76, 126, 0.2);
 }
 
 /* Submit Button Styling */
 .submit-btn {
-    background-color: #5b7c65; /* Sage green background */
+    background-color: #2b4c7e; /* Elegant blue background */
     color: #ffffff;
     border: none;
     padding: 15px 20px;
@@ -463,6 +463,6 @@ footer {
 }
 
 .submit-btn:hover {
-    background-color: #46604e; /* Darker green on hover */
+    background-color: #1a365d; /* Darker navy blue on hover */
     transform: translateY(-2px); /* Slight lift effect */
 }
