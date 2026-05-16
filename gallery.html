@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Magnolia Manor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-background">
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.jpeg" alt="Magnolia Manor Logo" class="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="venue.html">Venue</a></li>
+                <li><a href="officespace.html">Office Space</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="gallery inner-page">
+        <h2>Photo Gallery</h2>
+        <div class="gallery-grid" id="gallery-grid"></div>
+    </section>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <span class="prev-btn" onclick="changeImage(-1)">&#10094;</span>
+        <img id="lightbox-img" src="" alt="Expanded Gallery Image">
+        <span class="next-btn" onclick="changeImage(1)">&#10095;</span>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="images/logo.jpeg" alt="Magnolia Manor Logo" class="logo">
+            </div>
+            <div class="footer-contact">
+                <p><strong>Contact Us</strong></p>
+                <p>Oak Ridge, NC</p>
+                <p>(555) 123-4567</p>
+                <p>info@magnoliamanor.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Magnolia Manor Business & Event Center. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. Generate the Gallery Automatically ---
+        const galleryGrid = document.getElementById('gallery-grid');
+        const totalImages = 50; // Update this if you add or remove photos!
+        const imageSources = [];
+
+        // Loop to create image tags dynamically
+        for (let i = 1; i <= totalImages; i++) {
+            const imgPath = `images/slides/${i}.jpeg`;
+            imageSources.push(imgPath); // Save path for the lightbox
+
+            // Create the HTML element
+            const imgElement = document.createElement('img');
+            imgElement.src = imgPath;
+            imgElement.alt = `Magnolia Manor Gallery Image ${i}`;
+            imgElement.className = 'gallery-item';
+
+            // Note: arrays start at 0, so image 1 is index 0
+            imgElement.onclick = () => openLightbox(i - 1);
+
+            // Add it to the page
+            galleryGrid.appendChild(imgElement);
+        }
+
+        // --- 2. Lightbox Functionality ---
+        let currentImageIndex = 0;
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            lightboxImg.src = imageSources[currentImageIndex];
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function changeImage(direction) {
+            currentImageIndex += direction;
+
+            // Loop back to the start or end if clicking past the array bounds
+            if (currentImageIndex >= imageSources.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = imageSources.length - 1;
+            }
+
+            lightboxImg.src = imageSources[currentImageIndex];
+        }
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Bonus: Allow using Left/Right arrow keys and Escape key
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'ArrowRight') changeImage(1);
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -16,9 +16,10 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="venues.html">Venues</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li><a href="venue.html">Venue</a></li>
+                <li><a href="officespace.html">Office Space</a></li>
                 <li><a href="events.html">Events</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
@@ -30,7 +31,7 @@
         <div class="hero-content">
             <h1>Elegant Spaces.<br>Unforgettable Events.</h1>
             <p>Experience the perfect blend of modern luxury and timeless hospitality.</p>
-            <a href="venues.html" class="btn">Explore Our Venues</a>
+            <a href="contact.html" class="btn">Book a Tour</a>
         </div>
     </section>
 
@@ -39,11 +40,19 @@
         const totalImages = 50; // Change this to your exact number of images
         let currentImage = 1;
 
+        // --- NEW CODE: Load the first image immediately on page load ---
+        slider.style.backgroundImage = `url('images/slides/${currentImage}.jpeg')`;
+        slider.style.opacity = 0.6; // Make sure it's visible right away
+        // ---------------------------------------------------------------
+
         // Preload the next image to prevent flickering
         function preloadImage(url) {
             const img = new Image();
             img.src = url;
         }
+
+        // Preload the second image right away so it's ready for the first transition
+        preloadImage(`images/slides/2.jpeg`);
 
         // The Slideshow Function
         setInterval(() => {
@@ -57,7 +66,7 @@
                     currentImage = 1;
                 }
 
-                const nextImageUrl = `images/slides/${currentImage}.jpeg`; // Update your folder path if needed
+                const nextImageUrl = `images/slides/${currentImage}.jpeg`;
                 slider.style.backgroundImage = `url('${nextImageUrl}')`;
 
                 // Fade back in
@@ -67,9 +76,9 @@
                 let nextToLoad = currentImage + 1 > totalImages ? 1 : currentImage + 1;
                 preloadImage(`images/slides/${nextToLoad}.jpeg`);
 
-            }, 1000); // Wait 1 second for fade out to complete before swapping
+            }, 500); // 500ms fade out time (make sure this matches your CSS transition time!)
 
-        }, 6000); // Changes every 6 seconds
+        }, 4000); // Swap images every 4 seconds
     </script>
 
     <footer>
